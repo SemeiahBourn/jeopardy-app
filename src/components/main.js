@@ -1,38 +1,37 @@
 
 import Button from 'react-bootstrap/Button';
-import {component} from "react"
+import {useState} from "react"
 
-class Main extends component {
-state = {
-  answer: '',
-  question:'',
-  value:'',
-  title:''  
+
+
+function Main () {
+var [question, setQuestion]= useState("click the button for funzies")
+
+
+ async function getData(){
+    fetch('http://jservice.io/api/random')
+    .then(res => res.json())
+    .then(data => setQuestion(data[0].question)
+    )
+    .catch(error => console.log(error))
 }
-    
 
-render(){
-    async function getData () {
-        const url = "http://jservice.io/api/random";
-      const response = await fetch (url);
-      const data = await response.json();
-      this.setState({answer: data[0]})
-       
-       
-      }
     return(
 <div>
     <h1> Jeopardy </h1>
     <div id="jeopardyResults"></div>
-    <Button onClick={getData}id="fetchButton" variant="primary" size="lg" active>
+    <Button onClick={getData} id="fetchButton" variant="primary" size="lg" active>
         Click Me, Or Don't
       </Button>{' '}
-     <div>{this.state.answer}</div>
-     
+      <div>
+        {question}
+      </div>
+
 </div>
+
     )
 }
 
-}
+
 
 export default Main;
