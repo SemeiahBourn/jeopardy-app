@@ -5,14 +5,24 @@ import {useState} from "react"
 
 
 function Main () {
-var [question, setQuestion]= useState("click the button for funzies")
+    const [allValues, setAllValues] = useState({
+        question: '',
+        category: '',
+        value: '',
+        answer: '',
+       
+    });
+
+
 
 
  async function getData(){
     fetch('http://jservice.io/api/random')
     .then(res => res.json())
-    .then(data => setQuestion(data[0].question)
+    .then(data => 
+        setAllValues({...allValues, question :data[0].question,value :data[0].value, category :data[0].category.title, answer :data[0].answer}) 
     )
+    
     .catch(error => console.log(error))
 }
 
@@ -24,7 +34,7 @@ var [question, setQuestion]= useState("click the button for funzies")
         Click Me, Or Don't
       </Button>{' '}
       <div>
-        {question}
+        {allValues.question}{allValues.category}{allValues.value}{allValues.answer}
       </div>
 
 </div>
